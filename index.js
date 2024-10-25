@@ -40,15 +40,22 @@ async function main() {
     //     res.send(payment);
     // })
 
+    // app.get('/students', async (req, res) => {
+    //     let [students] = await connection.execute('SELECT * FROM students INNER JOIN tutors ON students.student_id = tutors.tutor_id ');
+    //     res.render('layouts/students', {
+    //         'students': students
+    //     })
+    // })
+    
     app.get('/students', async (req, res) => {
-        let [students] = await connection.execute('SELECT * FROM students INNER JOIN tutors ON students.tutor_id = tutors.tutor_id ');
+        let [students] = await connection.execute('SELECT * FROM students INNER JOIN tutors ON students.tutor_id = tutors.tutor_id');
+       console.log(students)>>>'show'
         res.render('layouts/students', {
             'students': students
+            
         })
     })
     
-
-
     
     app.get('/students/create', async function (req, res) {
         const [tutors] = await connection.execute('SELECT * FROM tutors');
