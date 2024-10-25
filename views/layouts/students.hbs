@@ -17,10 +17,10 @@
     <tbody>
         {{#each students}}
         <tr>
-            <td>{{first_name}}</td>
-            <td>{{last_name}}</td>
+            <td>{{students_first_name}}</td>
+            <td>{{students_last_name}}</td>
             <td>{{date_of_birth}}</td>
-            <td>{{tutor.name_of_qualification}}</td>
+            <td>{{name_of_qualification}}</td>
             <td>
                 <a href="/students/{{student_id}}/edit" class="btn btn-primary btn-sm">Edit</a>
                 <a href="/students/{{student_id}}/delete" class="btn btn-danger btn-sm">Delete</a>
