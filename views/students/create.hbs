@@ -1,9 +1,10 @@
 {{#extends "base"}}
 
-{{#block "title"}}Create New Customer{{/block}}
+{{#block "title"}}Create New Student{{/block}}
 
 {{#block "content"}}
-<h1>Create New Customer</h1>
+
+<h1>Create New Student</h1>
 <form method="POST">
     <div class="mb-3">
         <label>First Name</label>
@@ -14,14 +15,14 @@
         <input type="text" class="form-control" name="last_name"/>
     </div>
     <div class="mb-3">
-        <label>Rating</label>
-        <input type="number" class="form-control" name="rating"/>
+        <label>Date of Birth</label>
+        <input type="date" class="form-control" name="date_of_birth"/>
     </div>
     <div class="mb-3">
-        <label>Company</label>
-        <select name="company_id" class="form-control">
-            {{#each companies}}
-            <option value="{{company_id}}">{{name}}</option>
+        <label>Music Tutor Level</label>
+        <select name="tutor_id" class="form-control">
+            {{#each tutors}}
+            <option value="{{tutor_id}}">{{name_of_qualification}}</option>
             {{/each}}
         </select>
     </div>

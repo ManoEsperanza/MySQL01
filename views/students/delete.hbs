@@ -1,14 +1,14 @@
 {{#extends "base"}}
 
-{{#block "title"}}Delete Customer{{/block}}
+{{#block "title"}}Delete Student{{/block}}
 
 {{#block "content"}}
 <form method="POST">
     <div class="alert alert-danger">
-        Are you sure you want to delete {{customer.first_name}} {{customer.last_name}}
+        Are you sure you want to delete {{student.first_name}} {{student.last_name}}
         <div>
             <input type="submit" value="Confirm" class="btn btn-danger"/>
-            <a href="/customers" class="btn btn-primary">Cancel</a>
+            <a href="/students" class="btn btn-primary">Cancel</a>
         </div>
     </div>
 </form>

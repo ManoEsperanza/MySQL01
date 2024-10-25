@@ -1,74 +1,58 @@
--- SQL Schema for Financial Advising Company
-CREATE DATABASE crm;
+USE music;
 
-USE crm;
-
--- Creating Companies Table
-CREATE TABLE Companies (
-    company_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT
-);
-
--- Creating Customers Table
-CREATE TABLE Customers (
-    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE tutors (
+    tutor_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
-    rating INT,
-    company_id INT,
-    FOREIGN KEY (company_id) REFERENCES Companies(company_id)
+    contact_number VARCHAR(12),
+    name_of_qualification TEXT
 );
 
--- Creating Departments Table
-CREATE TABLE Departments (
-    department_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
-);
-
--- Creating Employees Table
-CREATE TABLE Employees (
-    employee_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE students (
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
-    department_id INT,
-    FOREIGN KEY (department_id) REFERENCES Departments(department_id)
+    date_of_birth DATE,
+    tutor_id INT,
+    FOREIGN KEY (tutor_id) REFERENCES tutors(tutor_id)
 );
 
--- Creating Products Table
-CREATE TABLE Products (
-    product_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT
+CREATE TABLE payment (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    amount INT,
+    payment_mode VARCHAR(100),
+    student_id INT,
+    FOREIGN KEY (student_id) REFERENCES students(student_id)
 );
 
--- Creating Sales Table
-CREATE TABLE Sales (
-    sale_id INT AUTO_INCREMENT PRIMARY KEY,
-    product_id INT,
-    employee_id INT,
-    customer_id INT,
-    quantity INT,
-    sale_date DATE,
-    FOREIGN KEY (product_id) REFERENCES Products(product_id),
-    FOREIGN KEY (employee_id) REFERENCES Employees(employee_id),
-    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+CREATE TABLE session (
+    session_id INT AUTO_INCREMENT PRIMARY KEY,
+    occurrence DATETIME,
+    venue VARCHAR(250),
+    student_id INT,
+    tutor_id INT,
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (tutor_id) REFERENCES tutors(tutor_id)
 );
 
--- Creating EmployeeCustomer Table
-CREATE TABLE EmployeeCustomer (
-    employee_id INT,
-    customer_id INT,
-    PRIMARY KEY (employee_id, customer_id),
-    FOREIGN KEY (employee_id) REFERENCES Employees(employee_id),
-    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+CREATE TABLE attendance (
+    attendance_id INT AUTO_INCREMENT PRIMARY KEY,
+    session_id INT,
+    student_id INT,
+    tutor_id INT,
+    payment_id INT,
+    FOREIGN KEY (session_id) REFERENCES session(session_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (tutor_id) REFERENCES tutors(tutor_id),
+    FOREIGN KEY (payment_id) REFERENCES payment(payment_id)
 );
 
--- Creating EmployeeProduct Table
-CREATE TABLE EmployeeProduct (
-    employee_id INT,
-    product_id INT,
-    PRIMARY KEY (employee_id, product_id),
-    FOREIGN KEY (employee_id) REFERENCES Employees(employee_id),
-    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+CREATE TABLE address (
+    address_id INT AUTO_INCREMENT PRIMARY KEY,
+    blk_number VARCHAR(6),
+    street_name VARCHAR(255),
+    unit_number CHAR(10),
+    postal_code CHAR(6),
+    student_id INT,
+    FOREIGN KEY (student_id) REFERENCES students(student_id)
 );

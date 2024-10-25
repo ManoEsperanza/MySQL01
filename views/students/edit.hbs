@@ -1,40 +1,38 @@
 {{#extends "base"}}
 
-{{#block "title"}}Edit New Customer{{/block}}
+{{#block "title"}}Edit New Student{{/block}}
 
 {{#block "content"}}
-<h1>Edit New Customer</h1>
+<h1>Edit New Student</h1>
 <form method="POST">
     <div class="mb-3">
         <label>First Name</label>
         <input type="text" 
                class="form-control" 
                name="first_name"
-               value="{{customer.first_name}}"/>
+               value="{{student.first_name}}"/>
     </div>
     <div class="mb-3">
         <label>Last Name</label>
         <input type="text" 
                class="form-control" 
                name="last_name"
-               value="{{customer.last_name}}"
+               value="{{student.last_name}}"
                />
     </div>
     <div class="mb-3">
-        <label>Rating</label>
-        <input type="number" 
+        <label>Date of Birth</label>
+        <input type="date" 
                class="form-control" 
-               name="rating"
-               value="{{customer.rating}}"
+               name="date_of_birth"
+               value="{{student.date_of_birth}}"
                />
     </div>
     <div class="mb-3">
-        <label>Company</label>
-        <select name="company_id" class="form-control">
-            {{#each companies}}
-            <option value="{{company_id}}" 
-                {{#eq company_id  ../customer.company_id}} selected {{/eq}}
-             >{{name}}</option>
+        <label>Music Tutor Level </label>
+        <select name="tutor_id" class="form-control">
+            {{#each tutors}}
+            <option value="{{tutor_id}}">{{name_of_qualification}}</option>
             {{/each}}
         </select>
     </div>
