@@ -32,7 +32,10 @@
         <label>Music Tutor Level </label>
         <select name="tutor_id" class="form-control">
             {{#each tutors}}
-            <option value="{{tutor_id}}">{{name_of_qualification}}</option>
+            <option value="{{tutor_id}}"
+   {{#eq tutor_id ../student.tutor_id}}selected{{/eq}}>        
+                {{name_of_qualification}}
+               </option>
             {{/each}}
         </select>
     </div>

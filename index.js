@@ -29,17 +29,6 @@ async function main() {
         'password': process.env.DB_PASSWORD
     });
 
-
-    // app.get('/test', async function (req, res) {
-    //     let [payment] = await connection.execute('SELECT * FROM payment');
-    //     // await connection.execute() returns an array
-    //     // element 0 - is the result
-    //     // element 1 - some metadata
-    //     // let response = await connection.execute("SELECT * FROM Companies");
-    //     // let companies = response[0];
-    //     res.send(payment);
-    // })
-
     // app.get('/students', async (req, res) => {
     //     let [students] = await connection.execute('SELECT * FROM students INNER JOIN tutors ON students.student_id = tutors.tutor_id ');
     //     res.render('layouts/students', {
@@ -47,11 +36,7 @@ async function main() {
     //     })
     // })
     
-    
-    
-
-
-    app.get('/students', async (req,res) => {
+        app.get('/students', async (req,res) => {
         let[ students] = await connection.execute
     ('SELECT *, students.first_name AS students_first_name, students.last_name AS students_last_name, tutors.first_name AS tutors_first_name, tutors.last_name AS tutors_last_name FROM students INNER JOIN tutors ON students.tutor_id = tutors.tutor_id ORDER BY students_first_name ASC ;');
   console.log(students)
