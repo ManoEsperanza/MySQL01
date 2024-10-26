@@ -19,7 +19,8 @@
         <tr>
             <td>{{students_first_name}}</td>
             <td>{{students_last_name}}</td>
-            <td>{{date_of_birth}}</td>
+            {{!-- <td>{{date_of_birth}}</td> --}}
+            <td>{{formatTime date_of_birth "DD-MM-YYYY"}}</td>
             <td>{{name_of_qualification}}</td>
             <td>
                 <a href="/students/{{student_id}}/edit" class="btn btn-primary btn-sm">Edit</a>

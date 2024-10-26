@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const hbs = require('hbs');
 const wax = require('wax-on');
+const moment = require('moment');
 wax.on(hbs.handlebars);
 wax.setLayoutPath("./views/layouts");
 
@@ -12,6 +13,11 @@ helpers({
     'handlebars': hbs.handlebars
 })
 
+hbs.registerHelper('formatTime', function (date, format) {
+    var mmnt = moment(date);
+    return mmnt.format(format);
+});
+
 require('dotenv').config();
 
 const {createConnection} = require('mysql2/promise');
@@ -19,6 +25,17 @@ const {createConnection} = require('mysql2/promise');
 app.set("view engine", "hbs");
 
 app.use(express.urlencoded());
+
+function formatSqlDate(date) {
+    // Ensure date is a Date object
+    if (!(date instanceof Date)) {
+        throw new Error("Invalid date object");
+    }
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
 
 async function main() {
 
@@ -38,7 +55,12 @@ async function main() {
     
         app.get('/students', async (req,res) => {
         let[ students] = await connection.execute
-    ('SELECT *, students.first_name AS students_first_name, students.last_name AS students_last_name, tutors.first_name AS tutors_first_name, tutors.last_name AS tutors_last_name FROM students INNER JOIN tutors ON students.tutor_id = tutors.tutor_id ORDER BY students_first_name ASC ;');
+    (`SELECT *, students.first_name AS students_first_name, students.last_name AS students_last_name, 
+        tutors.first_name AS tutors_first_name, 
+        tutors.last_name AS tutors_last_name 
+        FROM students INNER JOIN tutors ON 
+        students.tutor_id = tutors.tutor_id 
+        ORDER BY students_first_name ASC ;`);
   console.log(students)
 res.render ('layouts/students', {
 'students' : students
@@ -84,7 +106,7 @@ res.render ('layouts/students', {
         const [students] = await connection.execute('SELECT * FROM students WHERE student_id = ?',[studentId]);
 
         const student = students[0];
-
+        student.date_of_birth = formatSqlDate(new Date(student.date_of_birth));
         const [tutors] = await connection.execute('SELECT * FROM tutors');
 
         res.render('students/edit', {
